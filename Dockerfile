@@ -1,4 +1,3 @@
-# Imagen base con PHP, Composer y extensiones comunes
 FROM php:8.2-cli
 
 # Instalar dependencias del sistema
@@ -15,14 +14,14 @@ WORKDIR /var/www/html
 # Copiar archivos del proyecto
 COPY . .
 
-# Instalar dependencias PHP
+# Instalar dependencias de PHP
 RUN composer install --no-dev --optimize-autoloader
 
-# Opcional: establecer permisos
-RUN chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache
+# Establecer permisos necesarios
+RUN chmod -R 755 storage bootstrap/cache
 
-# Puerto expuesto (para Laravel serve)
+# Exponer puerto
 EXPOSE 10000
 
-# Comando de inicio (en Settings → Start Command)
-# php artisan serve --host 0.0.0.0 --port 10000
+# Comando de inicio (reemplaza Pre-Deploy + Start)
+CMD php artisan config:cache && php artisan migrate --force && php artisan serve --host 0.0.0.0 --port 10000
