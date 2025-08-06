@@ -29,8 +29,6 @@ COPY . .
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# Generar clave de aplicación
-RUN php artisan key:generate
 
 # Establecer permisos
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
